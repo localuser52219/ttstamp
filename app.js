@@ -9,13 +9,15 @@ document.addEventListener('touchend', (e) => {
     // 每次觸摸結束，蓋印次數加一
     stampCount++;
     counterElement.textContent = `蓋印次數: ${stampCount}`;
+    console.log(`--- 第 ${stampCount} 次蓋印 ---`);
+    console.log(`偵測到的觸控點數量: ${touches.length}`);
 
-    // 如果觸控點數量不正確，只更新訊息
-    if (touches.length !== 2) {
-        messageElement.textContent = `請用兩根手指輕觸螢幕。`;
+    // 檢查觸控點數量
+    if (touches.length !== 3) {
+        messageElement.textContent = `請用三根手指輕觸螢幕。`;
         messageElement.style.color = "red";
-        distanceDisplay.textContent = "當前距離數值: 無法計算";
-        console.log(`❌ 驗證失敗 (第 ${stampCount} 次)：觸控點數量不對，需要2個。`);
+        distanceDisplay.textContent = "當前數值: 無法計算";
+        console.log(`❌ 驗證失敗：觸控點數量不對，需要3個。`);
         return;
     }
 
@@ -29,27 +31,29 @@ document.addEventListener('touchend', (e) => {
         });
     }
 
-    // 計算兩點間的距離
-    const distance = Math.sqrt(
-        Math.pow(points[1].x - points[0].x, 2) +
-        Math.pow(points[1].y - points[0].y, 2)
-    );
+    // 計算三點間的距離
+    const distance = (p1, p2) => Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
 
-    // 在畫面上顯示計算出的數值，保留三位小數
-    distanceDisplay.textContent = `當前距離數值: ${distance.toFixed(3)}`;
-
-    // 定義驗證所需的距離範圍
-    const minDistance = 0.05;
-    const maxDistance = 0.5;
+    const d1 = distance(points[0], points[1]);
+    const d2 = distance(points[1], points[2]);
+    const d3 = distance(points[2], points[0]);
     
-    // 驗證距離是否在範圍內
-    if (distance >= minDistance && distance <= maxDistance) {
+    // 計算三角形的周長作為驗證基準
+    const perimeter = d1 + d2 + d3;
+    distanceDisplay.textContent = `當前數值 (周長): ${perimeter.toFixed(3)}`;
+
+    // 定義一個合理的周長範圍
+    const minPerimeter = 0.2; 
+    const maxPerimeter = 1.0; 
+
+    // 驗證周長是否在範圍內
+    if (perimeter >= minPerimeter && perimeter <= maxPerimeter) {
         messageElement.textContent = "驗證成功！";
         messageElement.style.color = "green";
-        console.log(`✅ 驗證成功 (第 ${stampCount} 次)！`);
+        console.log("✅ 驗證成功！");
     } else {
-        messageElement.textContent = "請調整兩指間的距離，重新嘗試。";
+        messageElement.textContent = "請調整三指間的距離，重新嘗試。";
         messageElement.style.color = "red";
-        console.log(`❌ 驗證失敗 (第 ${stampCount} 次)：兩點距離不符。`);
+        console.log("❌ 驗證失敗：三角形周長不符。");
     }
 });
