@@ -7,15 +7,16 @@
     <style>
         body {
             display: flex;
+            flex-direction: column; /* 讓元素垂直排列 */
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
-            user-select: none; /* 防止用戶選取文字 */
-            -webkit-user-select: none; /* 針對 Safari */
-            touch-action: none; /* 防止預設的觸控手勢，例如縮放 */
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
         }
         #message {
             font-size: 2em;
@@ -25,11 +26,17 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px; /* 與計數器間的間距 */
+        }
+        #counter {
+            font-size: 1.2em;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <div id="message">請將您的電子印章蓋在螢幕上</div>
+    <div id="message">請用兩根手指輕觸螢幕進行測試</div>
+    <div id="counter">蓋印次數: 0</div>
 
     <script src="app.js"></script>
 </body>
