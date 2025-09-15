@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>電子印章驗證</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            user-select: none; /* 防止用戶選取文字 */
+            -webkit-user-select: none; /* 針對 Safari */
+            touch-action: none; /* 防止預設的觸控手勢，例如縮放 */
+        }
+        #message {
+            font-size: 2em;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="message">請將您的電子印章蓋在螢幕上</div>
+
+    <script src="app.js"></script>
+</body>
+</html>
